@@ -1,0 +1,47 @@
+server.port: 8088
+#数据源配置（默认）
+spring.datasource:
+# useSSL: false MySQL在高版本需要指明是否进行SSL连接（不加第一次连接数据库会有警告信息）
+  driver: com.mysql.jdbc.Driver
+  url: jdbc:mysql://192.168.1.20:3306/activemq?characterEncoding=utf8&useSSL=false
+  username: mytest
+  password: itszhongxin
+#ds1,ds2 其他两个数据源
+slave.datasource:
+  names=: ds1,ds2
+  #ds1
+  ds1.driver: com.mysql.jdbc.Driver
+  ds1.url: jdbc:mysql://192.168.1.20:3306/test1?useSSL=false
+  ds1.username: mytest
+  ds1.password: itszhongxin
+  #ds2
+  ds2.driver: com.mysql.jdbc.Driver
+  ds2.url: jdbc:mysql://192.168.1.20:3306/test2?useSSL=false
+  ds2.username: mytest
+  ds2.password: itszhongxin
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.tsg.entity
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 2
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #数据库大写下划线转换
+    #capital-mode: true
+    #逻辑删除配置（下面3个配置）
+    logic-delete-value: 0
+    logic-not-delete-value: 1
+    #自定义sql注入器,不在推荐使用此方式进行配置,请使用自定义bean注入
+#    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+    # SQL 解析缓存，开启后多租户 @SqlParser 注解生效
+#    sql-parser-cache: true
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
